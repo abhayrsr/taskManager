@@ -16,11 +16,20 @@ console.log("Is there any update you want to make to the list?(yes/no)");
 var delRequest = readlineSync.question();
 if(delRequest == "yes"){
   console.log(`Ok, select the item number from list to delete. Type "done" when finished deleting!`)
+  var delArray = [];
+  var num = 1;
   while(true){
-    var delNum = readlineSync.question()
+    var delNum = readlineSync.question();
     if(delNum == "done") break;
-    tasks.splice(delNum - 1, 1);
+    delArray.push(delNum);
   }
+  console.log(delArray);
+  delArray.sort((a,b) => a-b);
+  for(var i = 0; i < delArray.length; i++){
+    tasks.splice(delArray[i]-num,1);
+    num++;
+  }
+  console.log(`list of tasks: `, tasks);
 } else {
   console.log("Ok, great!");
 }
@@ -34,20 +43,21 @@ if(newRequest == "yes"){
     if(newTask == "done") break;
     tasks.push(newTask);
   }
+
+  console.log(`updated list: `, tasks);
 } else {
   console.log("Ok, all the best!")
 }
 
-function assume(){
-  console.log("Assume, you are done for the day. What tasks have you completed? \nType 'complete' in front of the tasks that are complete and 'incomplete' in front of the tasks that are incomplete.");
-}
 
-setTimeout(assume, 3000);
+
+console.log("Assume, you are done for the day. What tasks have you completed? \n");
+
 
 var complete = [];
 var incomplete = [];
 var count = 0;
-console.log(`Write the no. of the task completed(Type 'done' when finished typing!): `);
+console.log(`Write the tasks completed(Type 'done' when finished typing!): `);
 while(true){
   var compTask = readlineSync.question();
   if(compTask == "done") break;
@@ -62,7 +72,7 @@ if(complete.length){
   console.log("Task Completed: none");
 }
 
-for(var i = 0; i <=  tasks.length; i++){
+for(var i = 0; i <  tasks.length; i++){
   if(!complete.includes(tasks[i])){
     incomplete.push(tasks[i]);
   }
